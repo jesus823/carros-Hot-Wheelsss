@@ -305,7 +305,7 @@
     .vista-general p,
     .vista-general button,
     .vista-general .card-body,
- 
+
 
 
 
@@ -342,36 +342,38 @@
       border-radius: 7px !important;
     }
 
-.vista-general .badge-numero {
-  position: static !important;
-  margin-top: 2px;
-  display: flex !important;
-  justify-content: center;
-  align-items: center;  /* <--- esto alinea verticalmente */
-  font-size: 6px;
-  background-color: #ccc !important;
-  color: black;
-  border: 1px solid #000;
-  border-radius: 6px;
-  width: 36px;
-  height: 10px;
-  padding: 0 4px; /* opcional: espaciado horizontal */
-}
-#textoInicio {
-  position: fixed;
-  top: 45px; /* un poco más abajo que el botón */
-  left: 12px; /* alineado con el botón */
-  font-size: 9px;
-  font-weight: bold;
-  padding: 2px 6px;
-  border-radius: 4px;
-  z-index: 1001;
-  color: rgb(210, 6, 203);
-  text-align: center;
-}
+    .vista-general .badge-numero {
+      position: static !important;
+      margin-top: 2px;
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+      /* <--- esto alinea verticalmente */
+      font-size: 6px;
+      background-color: #ccc !important;
+      color: black;
+      border: 1px solid #000;
+      border-radius: 6px;
+      width: 36px;
+      height: 10px;
+      padding: 0 4px;
+      /* opcional: espaciado horizontal */
+    }
 
-
-
+    #textoInicio {
+      position: fixed;
+      top: 45px;
+      /* un poco más abajo que el botón */
+      left: 12px;
+      /* alineado con el botón */
+      font-size: 9px;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 4px;
+      z-index: 1001;
+      color: rgb(210, 6, 203);
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -381,15 +383,14 @@
     <img src="inicio.png" alt="Inicio" title="Ir al inicio" style="border-radius: 50px;" />
   </a>
 
-<div id="textoInicio">Home</div>
+  <div id="textoInicio">Home</div>
 
-<button id="btnVistaGeneral" onclick="activarVistaGeneral()"
-  style="position: fixed; top: 20px; right: 10px; z-index: 1001; font-weight: bold;
+  <button id="btnVistaGeneral" onclick="activarVistaGeneral()" style="position: fixed; top: 20px; right: 10px; z-index: 1001; font-weight: bold;
          background-color: rgb(44, 162, 93); border: 2px solid black; font-size: 9px;
          border-radius: 8px; padding: 4px 8px;
          box-shadow: 2px 2px 6px rgba(80, 219, 100, 10); color: white;">
-  Vista general
-</button>
+    Vista general
+  </button>
 
 
 
@@ -964,7 +965,7 @@
         descripcion: "MATCHBOX",
         imagenes: ["carro77.png", "img-segundarias/carro77.77.png"]
       },
-///
+      ///
       {
         nombre: "Lil' Roar ",
         descripcion: "Hot Wheels",
@@ -994,23 +995,27 @@
         descripcion: "Hot Wheels",
         imagenes: ["carro82.png", "img-segundarias/carro82.82.png"]
       },
-       {
+      {
         nombre: "70 Dodge Power Wagon ",
         descripcion: "Hot Wheels",
         imagenes: ["carro83.png", "img-segundarias/carro83.83.png"]
       },
 
-{
+      {
         nombre: "70 plymouth superbird ",
         descripcion: "Hot Wheels",
         imagenes: ["carro84.png", "img-segundarias/carro84.84.png"]
       },
-       {
+      {
         nombre: "69 Corvette Racer",
         descripcion: "Hot Wheels",
         imagenes: ["carro85.png", "img-segundarias/carro85.85.png"]
       },
-
+      {
+        nombre: "66 Buick Riviera",
+        descripcion: "Hot Wheels",
+        imagenes: ["carro86.png", "img-segundarias/carro86.86.png"]
+      },
 
 
     ];
@@ -1311,37 +1316,37 @@
       document.getElementById("busqueda").value = "";
     }
 
-  function activarVistaGeneral() {
-  detalle.style.display = "none";
-  galeria.style.display = "flex";
+    function activarVistaGeneral() {
+      detalle.style.display = "none";
+      galeria.style.display = "flex";
 
-  // Oculta elementos de búsqueda
-  mensajeNoEncontrado.style.display = "none";
-  btnVolverBusqueda.style.display = "none";
-  document.getElementById("busqueda").value = "";
-  document.querySelector('.search-bar').style.display = "none";
+      // Oculta elementos de búsqueda
+      mensajeNoEncontrado.style.display = "none";
+      btnVolverBusqueda.style.display = "none";
+      document.getElementById("busqueda").value = "";
+      document.querySelector('.search-bar').style.display = "none";
 
-  // 🔥 Mostrar todos los carros (restaurar lo que ocultó la búsqueda)
-  document.querySelectorAll("#galeria .col-6, #galeria .col-md-4, #galeria .col-lg-3").forEach(col => {
-    col.style.display = "block";
-  });
+      // 🔥 Mostrar todos los carros (restaurar lo que ocultó la búsqueda)
+      document.querySelectorAll("#galeria .col-6, #galeria .col-md-4, #galeria .col-lg-3").forEach(col => {
+        col.style.display = "block";
+      });
 
-  // Aplica clases para vista general
-  document.querySelectorAll("#galeria .col-6, #galeria .col-md-4, #galeria .col-lg-3").forEach(col => {
-    col.classList.remove("col-6", "col-md-4", "col-lg-3");
-    col.classList.add("vista-general");
-  });
+      // Aplica clases para vista general
+      document.querySelectorAll("#galeria .col-6, #galeria .col-md-4, #galeria .col-lg-3").forEach(col => {
+        col.classList.remove("col-6", "col-md-4", "col-lg-3");
+        col.classList.add("vista-general");
+      });
 
-  // ❌ Elimina eventos de clic
-  document.querySelectorAll(".card").forEach(card => {
-    card.style.pointerEvents = "none"; // Desactiva los clics
-    card.style.cursor = "default";     // Quita el cursor de clic
-  });
+      // ❌ Elimina eventos de clic
+      document.querySelectorAll(".card").forEach(card => {
+        card.style.pointerEvents = "none"; // Desactiva los clics
+        card.style.cursor = "default";     // Quita el cursor de clic
+      });
 
-  // Scroll arriba
-  window.scrollTo({ top: 0, behavior: "smooth" });
-  document.querySelector(".fondo").style.backgroundImage = "url('fondo2.jpg')";
-}
+      // Scroll arriba
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      document.querySelector(".fondo").style.backgroundImage = "url('fondo2.jpg')";
+    }
 
 
 
