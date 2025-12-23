@@ -1209,43 +1209,34 @@
       bannerIndex = (bannerIndex + 1) % banners.length; // Avanza
       banners[bannerIndex].style.display = "block"; // Muestra el siguiente
     }, 4000); // cada 3 segundos
-    function volverAlInicio() {
-      // Oculta la vista detalle (si está visible)
-      detalle.style.display = "none";
+function volverAlInicio() {
+  // 1. Ocultar detalle y mostrar galería
+  detalle.style.display = "none";
+  galeria.style.display = "flex";
 
-      // Muestra la galería
-      galeria.style.display = "flex";
+  // 2. Restaurar el diseño de cuadrícula (Grid) original
+  document.querySelectorAll("#galeria > div").forEach(col => {
+    // Restauramos las clases de Bootstrap y quitamos vista-general
+    col.className = "col-6 col-md-4 col-lg-3 mb-4";
+    col.style.display = "block"; // Asegurar que sean visibles
+  });
 
-      // Restaura clases normales si estabas en vista general
-      const columnas = galeria.querySelectorAll(".vista-general");
-      columnas.forEach(col => {
-        col.classList.remove("vista-general");
-        col.classList.add("col-6", "col-md-4", "col-lg-3");
-      });
+  // 3. Restaurar la apariencia de las tarjetas
+  document.querySelectorAll(".card").forEach(card => {
+    card.style.pointerEvents = "auto";
+    card.style.cursor = "pointer";
+  });
 
-      // Vuelve a mostrar la barra de búsqueda
-      const barraBusqueda = document.querySelector('.search-bar');
-      if (barraBusqueda) barraBusqueda.style.display = 'flex';
+  // 4. Restaurar elementos de interfaz
+  document.querySelector('.search-bar').style.display = "flex";
+  document.getElementById("busqueda").value = "";
+  mensajeNoEncontrado.style.display = "none";
+  btnVolverBusqueda.style.display = "none";
 
-      // Opcional: limpiar resultados previos de búsqueda o scroll
-      mensajeNoEncontrado.style.display = "none";
-      btnVolverBusqueda.style.display = "none";
-
-      // Scroll arriba
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      document.querySelectorAll(".col-6, .col-md-4, .col-lg-3").forEach(col => {
-        col.style.display = "block";
-
-        document.querySelectorAll(".card").forEach(card => {
-          card.style.pointerEvents = "auto";
-          card.style.cursor = "pointer";
-
-          document.querySelector(".fondo").style.backgroundImage = "url('h4.jpg')";
-
-        });
-
-      });
-    }
+  // 5. Scroll y fondo original
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  document.querySelector(".fondo").style.backgroundImage = "url('h4.jpg')";
+}
 
 
 
@@ -1388,34 +1379,33 @@
 
       document.getElementById("busqueda").value = "";
     }
+function activarVistaGeneral() {
+  // 1. Ocultar el detalle por si acaso
+  detalle.style.display = "none";
+  galeria.style.display = "flex";
 
-    function activarVistaGeneral() {
-      detalle.style.display = "none";
-      galeria.style.display = "flex";
+  // 2. LIMPIAR ESTADO DE BÚSQUEDA (Esto soluciona tu problema)
+  mensajeNoEncontrado.style.display = "none"; // Oculta el mensaje de "No encontrado"
+  btnVolverBusqueda.style.display = "none";    // Oculta el botón de volver
+  document.getElementById("busqueda").value = ""; // Limpia el texto escrito
+  document.querySelector('.search-bar').style.display = "none"; // Oculta la barra de búsqueda
 
-      // Oculta elementos de búsqueda
-      mensajeNoEncontrado.style.display = "none";
-      btnVolverBusqueda.style.display = "none";
-      document.getElementById("busqueda").value = "";
-      document.querySelector('.search-bar').style.display = "none";
+  // 3. Mostrar TODOS los carros y aplicar diseño mini
+  document.querySelectorAll("#galeria > div").forEach(col => {
+    col.style.display = "block"; // Asegura que los carros ocultos por la búsqueda aparezcan
+    col.className = "vista-general"; 
+  });
 
-      // Mostrar todos los carros
-      document.querySelectorAll("#galeria > div").forEach(col => {
-        col.style.display = "block";
-        // Cambiamos las clases de Bootstrap por la de vista-general
-        col.className = "vista-general";
-      });
+  // 4. Re-activar clics por si estaban desactivados
+  document.querySelectorAll(".card").forEach(card => {
+    card.style.pointerEvents = "auto"; 
+    card.style.cursor = "pointer";    
+  });
 
-      // RE-ACTIVAR clics (Esto es lo que faltaba)
-      document.querySelectorAll(".card").forEach(card => {
-        card.style.pointerEvents = "auto";
-        card.style.cursor = "pointer";
-      });
-
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      document.querySelector(".fondo").style.backgroundImage = "url('fondo2.jpg')";
-    }
-
+  // 5. Estética y Scroll
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  document.querySelector(".fondo").style.backgroundImage = "url('fondo2.jpg')";
+}
 
 
 
