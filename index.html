@@ -375,7 +375,7 @@
       background-color: aliceblue;
       text-align: center;
       margin-left: 2px;
-     
+
       height: 13px;
     }
   </style>
@@ -421,6 +421,12 @@
         style="background-color: rgb(228, 149, 13); color: black; font-weight: bold; border: #000000 solid 2px;">Buscar</button>
     </div>
 
+<div class="text-start mt-2 ms-1">
+  <button id="btnIrAbajo" onclick="scrollToBottom()" 
+    style="background-color: #333; color: white; border: 2px solid #000; font-weight: bold; padding: 5px 15px; border-radius: 8px; font-size: 12px; cursor: pointer; box-shadow: 2px 2px 5px rgba(0,0,0,0.3);">
+    ↓ Ir al final
+  </button>
+</div>
     <div id="mensaje-no-encontrado">
       <p style="
   background-color: rgb(255, 255, 255); 
@@ -1056,7 +1062,23 @@
         imagenes: ["carro93.png", "img-segundarias/carro93.93.png"]
       },
 
-
+      {
+        nombre: "Tv Series Serie Tele Batimobile",
+        descripcion: "Hot Wheels",
+        imagenes: ["carro94.jpg", "img-segundarias/carro94.94.png"]
+      }, {
+        nombre: "BMW 635 CSi",
+        descripcion: "Hot Wheels",
+        imagenes: ["carro95.png", "img-segundarias/carro95.95.png"]
+      }, {
+        nombre: "Morgan Plus Four",
+        descripcion: "MATCHBOX",
+        imagenes: ["carro96.png", "img-segundarias/carro96.96.png"]
+      }, {
+        nombre: "15 Land Rover Defender Double Cab",
+        descripcion: "Hot Wheels",
+        imagenes: ["carro97.png", "img-segundarias/carro97.97.png"]
+      },
 
 
 
@@ -1172,7 +1194,13 @@
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
+// Función para ir al final de la página suavemente
+function scrollToBottom() {
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: 'smooth'
+  });
+}
     let bannerIndex = 0;
     const banners = document.querySelectorAll("#banner-container .banner");
 
@@ -1248,72 +1276,69 @@
       );
       indexCarrusel = carrosCarrusel.findIndex(c => c === carroClicado);
 
-      function renderCarrusel() {
-        const anterior = indexCarrusel > 0 ? carrosCarrusel[indexCarrusel - 1] : null;
-        const actual = carrosCarrusel[indexCarrusel];
-        const siguiente = indexCarrusel < carrosCarrusel.length - 1 ? carrosCarrusel[indexCarrusel + 1] : null;
+    function renderCarrusel() {
+    const anterior = indexCarrusel > 0 ? carrosCarrusel[indexCarrusel - 1] : null;
+    const actual = carrosCarrusel[indexCarrusel];
+    const siguiente = indexCarrusel < carrosCarrusel.length - 1 ? carrosCarrusel[indexCarrusel + 1] : null;
 
-        detalleImg.innerHTML = `
-    <div class="vista-detalle-carrusel" id="carrusel-contenedor">
-      ${anterior ? `<img src="${anterior.imagenes.find(img => /\.\d+\.png$/.test(img))}" class="vista-lateral">` : ""}
-      <img src="${actual.imagenes.find(img => /\.\d+\.png$/.test(img))}" class="vista-central">
-      ${siguiente ? `<img src="${siguiente.imagenes.find(img => /\.\d+\.png$/.test(img))}" class="vista-lateral">` : ""}
-    </div>
-  `;
+    // 1. Renderizamos el HTML
+    detalleImg.innerHTML = `
+        <div class="vista-detalle-carrusel" id="carrusel-contenedor">
+            ${anterior ? `<img src="${anterior.imagenes.find(img => /\.\d+\.png$/.test(img))}" class="vista-lateral" id="btn-prev">` : ""}
+            <img src="${actual.imagenes.find(img => /\.\d+\.png$/.test(img))}" class="vista-central">
+            ${siguiente ? `<img src="${siguiente.imagenes.find(img => /\.\d+\.png$/.test(img))}" class="vista-lateral" id="btn-next">` : ""}
+        </div>
+    `;
 
-        // actualiza título y descripción
-        detalleTitulo.innerHTML = `
-    ${actual.nombre}
-    <span class="detalle-numero">#${carros.indexOf(actual) + 1}</span>
-  `;
-
-        detalleDesc.innerHTML = `
-    <span style="background-color: ${actual.descripcion.toLowerCase() === 'hot wheels' ? '#27A3F5' :
+    // 2. Actualizamos texto y descripción
+    const numeroReal = carros.indexOf(actual) + 1;
+    detalleTitulo.innerHTML = `${actual.nombre} <span class="detalle-numero">#${numeroReal}</span>`;
+    detalleDesc.innerHTML = `
+        <span style="background-color: ${actual.descripcion.toLowerCase() === 'hot wheels' ? '#27A3F5' :
             actual.descripcion.toLowerCase() === 'matchbox' ? '#F07013' : 'gray'
-          }; color: white; padding: 4px 8px; border-radius: 6px;">
-      ${actual.descripcion}
-    </span>
-  `;
+        }; color: white; padding: 4px 8px; border-radius: 6px;">
+            ${actual.descripcion}
+        </span>
+    `;
 
-        // evento táctil
-        const contenedor = document.getElementById("carrusel-contenedor");
-        let startX = 0;
+    // 3. Eventos de CLIC en laterales (Corregido)
+    const btnPrev = document.getElementById("btn-prev");
+    const btnNext = document.getElementById("btn-next");
 
-        contenedor.addEventListener("touchstart", e => {
-          startX = e.touches[0].clientX;
-        });
-
-        contenedor.addEventListener("touchend", e => {
-          const endX = e.changedTouches[0].clientX;
-          const diff = endX - startX;
-
-          if (diff > 50 && indexCarrusel > 0) {
-            indexCarrusel--; // desliza a la izquierda
+    if (btnPrev) {
+        btnPrev.addEventListener("click", () => {
+            indexCarrusel--;
             renderCarrusel();
-          } else if (diff < -50 && indexCarrusel < carrosCarrusel.length - 1) {
-            indexCarrusel++; // desliza a la derecha
+        });
+    }
+
+    if (btnNext) {
+        btnNext.addEventListener("click", () => {
+            indexCarrusel++;
             renderCarrusel();
-          }
         });
+    }
 
-        // Evento para hacer clic en la imagen lateral y cambiar la central
-        const imagenesCarrusel = document.querySelectorAll("#carrusel-contenedor img");
+    // 4. Evento Táctil (Swipe)
+    const contenedor = document.getElementById("carrusel-contenedor");
+    let startX = 0;
 
-        imagenesCarrusel.forEach((img, idx) => {
-          img.addEventListener("click", () => {
-            if (img.classList.contains("vista-lateral")) {
-              if (idx === 0 && indexCarrusel > 0) {
-                indexCarrusel--; // clic en imagen izquierda
-                renderCarrusel();
-              } else if (idx === 2 && indexCarrusel < carrosCarrusel.length - 1) {
-                indexCarrusel++; // clic en imagen derecha
-                renderCarrusel();
-              }
-            }
-          });
-        });
+    contenedor.addEventListener("touchstart", e => {
+        startX = e.touches[0].clientX;
+    }, {passive: true});
 
-      }
+    contenedor.addEventListener("touchend", e => {
+        const endX = e.changedTouches[0].clientX;
+        const diff = endX - startX;
+        if (diff > 50 && indexCarrusel > 0) {
+            indexCarrusel--;
+            renderCarrusel();
+        } else if (diff < -50 && indexCarrusel < carrosCarrusel.length - 1) {
+            indexCarrusel++;
+            renderCarrusel();
+        }
+    }, {passive: true});
+}
 
       renderCarrusel();
 
