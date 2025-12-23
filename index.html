@@ -421,12 +421,12 @@
         style="background-color: rgb(228, 149, 13); color: black; font-weight: bold; border: #000000 solid 2px;">Buscar</button>
     </div>
 
-<div class="text-start mt-2 ms-1">
-  <button id="btnIrAbajo" onclick="scrollToBottom()" 
-    style="background-color: #333; color: white; border: 2px solid #000; font-weight: bold; padding: 5px 15px; border-radius: 8px; font-size: 12px; cursor: pointer; box-shadow: 2px 2px 5px rgba(0,0,0,0.3);">
-    ↓ Ir al final
-  </button>
-</div>
+    <div class="text-start mt-2 ms-1">
+      <button id="btnIrAbajo" onclick="scrollToBottom()"
+        style="background-color: #333; color: white; border: 2px solid #000; font-weight: bold; padding: 5px 15px; border-radius: 8px; font-size: 12px; cursor: pointer; box-shadow: 2px 2px 5px rgba(0,0,0,0.3);">
+        ↓ Ir al final
+      </button>
+    </div>
     <div id="mensaje-no-encontrado">
       <p style="
   background-color: rgb(255, 255, 255); 
@@ -1194,13 +1194,13 @@
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-// Función para ir al final de la página suavemente
-function scrollToBottom() {
-  window.scrollTo({
-    top: document.body.scrollHeight,
-    behavior: 'smooth'
-  });
-}
+    // Función para ir al final de la página suavemente
+    function scrollToBottom() {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
     let bannerIndex = 0;
     const banners = document.querySelectorAll("#banner-container .banner");
 
@@ -1276,13 +1276,13 @@ function scrollToBottom() {
       );
       indexCarrusel = carrosCarrusel.findIndex(c => c === carroClicado);
 
-    function renderCarrusel() {
-    const anterior = indexCarrusel > 0 ? carrosCarrusel[indexCarrusel - 1] : null;
-    const actual = carrosCarrusel[indexCarrusel];
-    const siguiente = indexCarrusel < carrosCarrusel.length - 1 ? carrosCarrusel[indexCarrusel + 1] : null;
+      function renderCarrusel() {
+        const anterior = indexCarrusel > 0 ? carrosCarrusel[indexCarrusel - 1] : null;
+        const actual = carrosCarrusel[indexCarrusel];
+        const siguiente = indexCarrusel < carrosCarrusel.length - 1 ? carrosCarrusel[indexCarrusel + 1] : null;
 
-    // 1. Renderizamos el HTML
-    detalleImg.innerHTML = `
+        // 1. Renderizamos el HTML
+        detalleImg.innerHTML = `
         <div class="vista-detalle-carrusel" id="carrusel-contenedor">
             ${anterior ? `<img src="${anterior.imagenes.find(img => /\.\d+\.png$/.test(img))}" class="vista-lateral" id="btn-prev">` : ""}
             <img src="${actual.imagenes.find(img => /\.\d+\.png$/.test(img))}" class="vista-central">
@@ -1290,55 +1290,55 @@ function scrollToBottom() {
         </div>
     `;
 
-    // 2. Actualizamos texto y descripción
-    const numeroReal = carros.indexOf(actual) + 1;
-    detalleTitulo.innerHTML = `${actual.nombre} <span class="detalle-numero">#${numeroReal}</span>`;
-    detalleDesc.innerHTML = `
+        // 2. Actualizamos texto y descripción
+        const numeroReal = carros.indexOf(actual) + 1;
+        detalleTitulo.innerHTML = `${actual.nombre} <span class="detalle-numero">#${numeroReal}</span>`;
+        detalleDesc.innerHTML = `
         <span style="background-color: ${actual.descripcion.toLowerCase() === 'hot wheels' ? '#27A3F5' :
             actual.descripcion.toLowerCase() === 'matchbox' ? '#F07013' : 'gray'
-        }; color: white; padding: 4px 8px; border-radius: 6px;">
+          }; color: white; padding: 4px 8px; border-radius: 6px;">
             ${actual.descripcion}
         </span>
     `;
 
-    // 3. Eventos de CLIC en laterales (Corregido)
-    const btnPrev = document.getElementById("btn-prev");
-    const btnNext = document.getElementById("btn-next");
+        // 3. Eventos de CLIC en laterales (Corregido)
+        const btnPrev = document.getElementById("btn-prev");
+        const btnNext = document.getElementById("btn-next");
 
-    if (btnPrev) {
-        btnPrev.addEventListener("click", () => {
+        if (btnPrev) {
+          btnPrev.addEventListener("click", () => {
             indexCarrusel--;
             renderCarrusel();
-        });
-    }
-
-    if (btnNext) {
-        btnNext.addEventListener("click", () => {
-            indexCarrusel++;
-            renderCarrusel();
-        });
-    }
-
-    // 4. Evento Táctil (Swipe)
-    const contenedor = document.getElementById("carrusel-contenedor");
-    let startX = 0;
-
-    contenedor.addEventListener("touchstart", e => {
-        startX = e.touches[0].clientX;
-    }, {passive: true});
-
-    contenedor.addEventListener("touchend", e => {
-        const endX = e.changedTouches[0].clientX;
-        const diff = endX - startX;
-        if (diff > 50 && indexCarrusel > 0) {
-            indexCarrusel--;
-            renderCarrusel();
-        } else if (diff < -50 && indexCarrusel < carrosCarrusel.length - 1) {
-            indexCarrusel++;
-            renderCarrusel();
+          });
         }
-    }, {passive: true});
-}
+
+        if (btnNext) {
+          btnNext.addEventListener("click", () => {
+            indexCarrusel++;
+            renderCarrusel();
+          });
+        }
+
+        // 4. Evento Táctil (Swipe)
+        const contenedor = document.getElementById("carrusel-contenedor");
+        let startX = 0;
+
+        contenedor.addEventListener("touchstart", e => {
+          startX = e.touches[0].clientX;
+        }, { passive: true });
+
+        contenedor.addEventListener("touchend", e => {
+          const endX = e.changedTouches[0].clientX;
+          const diff = endX - startX;
+          if (diff > 50 && indexCarrusel > 0) {
+            indexCarrusel--;
+            renderCarrusel();
+          } else if (diff < -50 && indexCarrusel < carrosCarrusel.length - 1) {
+            indexCarrusel++;
+            renderCarrusel();
+          }
+        }, { passive: true });
+      }
 
       renderCarrusel();
 
@@ -1399,28 +1399,22 @@ function scrollToBottom() {
       document.getElementById("busqueda").value = "";
       document.querySelector('.search-bar').style.display = "none";
 
-      // 🔥 Mostrar todos los carros (restaurar lo que ocultó la búsqueda)
-      document.querySelectorAll("#galeria .col-6, #galeria .col-md-4, #galeria .col-lg-3").forEach(col => {
+      // Mostrar todos los carros
+      document.querySelectorAll("#galeria > div").forEach(col => {
         col.style.display = "block";
+        // Cambiamos las clases de Bootstrap por la de vista-general
+        col.className = "vista-general";
       });
 
-      // Aplica clases para vista general
-      document.querySelectorAll("#galeria .col-6, #galeria .col-md-4, #galeria .col-lg-3").forEach(col => {
-        col.classList.remove("col-6", "col-md-4", "col-lg-3");
-        col.classList.add("vista-general");
-      });
-
-      // ❌ Elimina eventos de clic
+      // RE-ACTIVAR clics (Esto es lo que faltaba)
       document.querySelectorAll(".card").forEach(card => {
-        card.style.pointerEvents = "none"; // Desactiva los clics
-        card.style.cursor = "default";     // Quita el cursor de clic
+        card.style.pointerEvents = "auto";
+        card.style.cursor = "pointer";
       });
 
-      // Scroll arriba
       window.scrollTo({ top: 0, behavior: "smooth" });
       document.querySelector(".fondo").style.backgroundImage = "url('fondo2.jpg')";
     }
-
 
 
 
